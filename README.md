@@ -4,16 +4,11 @@ Repository with templates for different kinds of projects.
 
 ## Setup
 
-Clone repo and copy the `newp` (new project) script to a diretory in your PATH.
+Clone repo and run the setup script.
 
 ```sh
 git clone git@github.com:jesperkha/project-templates.git
-
-# Set templates path
-sed -i "s|^TEMPLATES_DIR=.*|TEMPLATES_DIR=$(pwd)|" newp
-
-# Put script in PATH
-ln -sf "$(pwd)/newp" ~/.local/bin/newp
+./setup.sh
 ```
 
 ## Use
