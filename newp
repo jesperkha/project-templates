@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+# ----------------------------
+#
+#    SET TO THIS (REPO) DIRECTORY
+# 
+#    sed -i "s|^TEMPLATES_DIR=.*|TEMPLATES_DIR=$(pwd)|" newp
+#
+# ----------------------------
+TEMPLATES_DIR=
+
+if [[ -z "$TEMPLATES_DIR" ]]; then
+    echo "ERROR: Template directory not set. Edit TEMPLATES_DIR in newp script."
+    exit 1
+fi
+
+# Check that templates directory exists
+if [[ ! -d "$TEMPLATES_DIR" ]]; then
+    echo "ERROR: Templates directory not found: $TEMPLATES_DIR"
+    exit 1
+fi
+
+# Prompt user for project type
+echo "Available templates:"
+ls "$TEMPLATES_DIR"
+echo
+
+read -rp "Enter project type (template name): " TEMPLATE
+
+# Check that the chosen template exists
+if [[ ! -d "$TEMPLATES_DIR/$TEMPLATE" ]]; then
+    echo "ERROR: Template '$TEMPLATE' does not exist."
+    exit 1
+fi
+
+# Copy template into current directory
+echo "Copying template '$TEMPLATE' into current directory..."
+cp -r "$TEMPLATES_DIR/$TEMPLATE/." .
+
+echo "Done! '$TEMPLATE' template is ready."
