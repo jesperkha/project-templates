@@ -22,7 +22,9 @@ fi
 
 # Prompt user for project type
 echo "Available templates:"
-ls "$TEMPLATES_DIR"
+for dir in "$TEMPLATES_DIR"/*/; do
+    echo "  $(basename "$dir")"
+done
 echo
 
 read -rp "Enter project type (template name): " TEMPLATE
@@ -33,8 +35,32 @@ if [[ ! -d "$TEMPLATES_DIR/$TEMPLATE" ]]; then
     exit 1
 fi
 
-# Copy template into current directory
-echo "Copying template '$TEMPLATE' into current directory..."
-cp -r "$TEMPLATES_DIR/$TEMPLATE/." .
+# Ask where to put the template
+echo
+echo "Where do you want to create the project?"
+echo "1) Current directory ($(pwd))"
+echo "2) New directory"
+read -rp "Choose 1 or 2: " CHOICE
 
-echo "Done! '$TEMPLATE' template is ready."
+TARGET_DIR=""
+
+if [[ "$CHOICE" == "1" ]]; then
+    TARGET_DIR="$(pwd)"
+elif [[ "$CHOICE" == "2" ]]; then
+    read -rp "Enter name for the new directory: " NEW_DIR
+    if [[ -z "$NEW_DIR" ]]; then
+        echo "ERROR: Directory name cannot be empty."
+        exit 1
+    fi
+    TARGET_DIR="$(pwd)/$NEW_DIR"
+    mkdir -p "$TARGET_DIR"
+else
+    echo "ERROR: Invalid choice."
+    exit 1
+fi
+
+# Copy template into target directory
+echo "Copying template '$TEMPLATE' into '$TARGET_DIR'..."
+cp -r "$TEMPLATES_DIR/$TEMPLATE/." "$TARGET_DIR"
+
+echo "Done! '$TEMPLATE' template is ready in '$TARGET_DIR'."
