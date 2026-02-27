@@ -3,7 +3,7 @@ module github.com/jesperkha/go-server-template
 go 1.25.0
 
 require (
-	github.com/echo-webkom/cenv v1.15.0
+	github.com/echo-webkom/cenv v1.16.0
 	github.com/go-chi/chi v1.5.5
 	github.com/go-chi/chi/v5 v5.2.2
 	github.com/go-chi/cors v1.2.2

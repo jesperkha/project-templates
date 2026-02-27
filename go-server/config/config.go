@@ -12,7 +12,7 @@ type Config struct {
 }
 
 func Load() *Config {
-	if err := cenv.Load(); err != nil {
+	if err := cenv.Verify(); err != nil {
 		log.Fatal(err)
 	}
 

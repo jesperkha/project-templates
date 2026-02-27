@@ -23,4 +23,6 @@ grep -rl --exclude-dir=.git "go-server-template" . | while read -r file; do
   sed -i "s/go-server-template/${NEW_NAME}/g" "$file"
 done
 
+sed -i "s/go-app/${NEW_NAME}/g" docker-compose.yaml
+
 echo "Replacement complete."
