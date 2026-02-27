@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+cp newp_original.sh newp.sh
+
 # Set TEMPLATES_DIR in the script to current directory
 sed -i "s|^TEMPLATES_DIR=.*|TEMPLATES_DIR=$(pwd)|" newp.sh
 

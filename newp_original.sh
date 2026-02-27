@@ -1,12 +1,5 @@
 #!/usr/bin/env bash
 
-# ----------------------------
-#
-#    SET TO THIS (REPO) DIRECTORY
-# 
-#    sed -i "s|^TEMPLATES_DIR=.*|TEMPLATES_DIR=$(pwd)|" newp
-#
-# ----------------------------
 TEMPLATES_DIR=
 
 if [[ -z "$TEMPLATES_DIR" ]]; then
