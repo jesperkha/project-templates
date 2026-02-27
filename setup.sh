@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 cp newp_original.sh newp.sh
+chmod +x newp.sh
 
 # Set TEMPLATES_DIR in the script to current directory
 sed -i "s|^TEMPLATES_DIR=.*|TEMPLATES_DIR=$(pwd)|" newp.sh
@@ -14,6 +15,9 @@ INSTALL_DIR="${INSTALL_DIR:-$DEFAULT_DIR}"
 mkdir -p "$INSTALL_DIR"
 
 # Create symlink in the chosen directory
-ln -sf "$(pwd)/newp.sh" "$INSTALL_DIR/newp"
+# ln -sf "$(pwd)/newp.sh" "$INSTALL_DIR/newp"
+
+# Copy script to install dir
+cp newp.sh $INSTALL_DIR/newp
 
 echo "Script installed as '$INSTALL_DIR/newp'. Make sure '$INSTALL_DIR' is in your PATH."
