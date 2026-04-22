@@ -1,0 +1,4 @@
+[[entries]]
+key = "PORT"
+default = ":8080"
+required = true
