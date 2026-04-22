@@ -1,4 +1,4 @@
-module micro-ddd
+module go-server-v2
 
 go 1.25.0
 

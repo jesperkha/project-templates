@@ -3,7 +3,7 @@ package repo
 import (
 	"context"
 	"log/slog"
-	"micro-ddd/domain"
+	"go-server-v2/domain"
 	"os"
 
 	"github.com/lmittmann/tint"

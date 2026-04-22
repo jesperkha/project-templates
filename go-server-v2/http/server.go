@@ -4,9 +4,9 @@ import (
 	"context"
 	"net/http"
 
-	"micro-ddd/config"
-	"micro-ddd/domain"
-	"micro-ddd/http/routes"
+	"go-server-v2/config"
+	"go-server-v2/domain"
+	"go-server-v2/http/routes"
 
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/chi/v5"

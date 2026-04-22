@@ -5,9 +5,9 @@ import (
 	"os"
 	"syscall"
 
-	"micro-ddd/config"
-	"micro-ddd/http"
-	"micro-ddd/repo"
+	"go-server-v2/config"
+	"go-server-v2/http"
+	"go-server-v2/repo"
 
 	"github.com/jesperkha/notifier"
 )
