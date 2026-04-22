@@ -3,12 +3,12 @@ package http
 import (
 	"context"
 	"net/http"
+	"time"
 
 	"go-server-v2/config"
 	"go-server-v2/domain"
 	"go-server-v2/http/routes"
 
-	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
 	"github.com/jesperkha/notifier"
@@ -29,7 +29,7 @@ type Dependencies struct {
 func Run(deps Dependencies) {
 	mux := chi.NewMux()
 
-	mux.Use(middleware.Logger)
+	mux.Use(requestLogger(deps.Logger))
 	mux.Use(cors.Handler(cors.Options{
 		AllowedOrigins:   []string{"https://*", "http://*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
@@ -78,4 +78,35 @@ func (s *Server) ListenAndServe(notif *notifier.Notifier, logger domain.Logger) 
 	if err := server.ListenAndServe(); err != http.ErrServerClosed {
 		logger.Error(ctx, "server closed with error", "error", err.Error())
 	}
+}
+
+func requestLogger(logger domain.Logger) func(http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			start := time.Now()
+			ww := &responseWriter{ResponseWriter: w, status: 200}
+
+			next.ServeHTTP(ww, r)
+
+			duration := time.Since(start)
+			logger.Info(r.Context(), "http request",
+				"method", r.Method,
+				"path", r.URL.Path,
+				"status", ww.status,
+				"duration", duration.String(),
+				"remote_addr", r.RemoteAddr,
+				"user_agent", r.UserAgent(),
+			)
+		})
+	}
+}
+
+type responseWriter struct {
+	http.ResponseWriter
+	status int
+}
+
+func (rw *responseWriter) WriteHeader(code int) {
+	rw.status = code
+	rw.ResponseWriter.WriteHeader(code)
 }
